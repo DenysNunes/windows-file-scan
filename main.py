@@ -25,7 +25,9 @@ df = pd.DataFrame(result_with_parent)
 size_by_folder = df.groupby(['parent_folder'], as_index=False)['size'].sum()
 size_by_folder = size_by_folder.sort_values(by=['size'], ascending=False)
 
-#size_by_folder['size'] = size_by_folder['size'].apply(convert_size)
+size_by_folder['size'] = size_by_folder['size'].apply(convert_size)
+size_by_folder.reset_index(drop=True, inplace=True)
+size_by_folder.to_csv("size_by_folder.csv")
 
 fig = go.Figure(data=[go.Table(
     header=dict(values=list(size_by_folder.columns),
